@@ -28,7 +28,7 @@ Quick compatibility chart and overview
                     Deep sleep                            X
     Disk            1TB HDD                               ✓
                     256Gb mSATA SSD (installed later)     ✓     Using trimforce enable
-    USB             Intel 8 / C220 XHCI                   ✓     Needs GenericUSBXHCI.kext
+    USB             Intel 8 / C220 XHCI                   ✓
     Webcam          UVC Camera                            ✓
     SD card reader  RTS5227                               X
     Keyboard        PS2                                   ✓     Needs DSDT patch for brightness controls
@@ -61,7 +61,7 @@ prepare the Yosemite installer, with the following notes:
 
 - I am using clover v3259
 - I have used the unibeast method to create the installation media, and installed clover on top of it.
-- You can use [this `config.plist` for install](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/Install/config.plist),
+- You can use [this `config.plist` for install](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/1-Install/config.plist),
   which is basically the default clover config with the KernelPM and AICPM patches enabled.
 - The `VoodooPS2Controller` will not work properly with the touchpad, and sometimes it won't even load up the keyboard in case the touchpad initialisation fails,
   so until there is a better kext, use [SmartTouchPad v4.4](http://forum.osxlatitude.com/index.php?/topic/1948-elan-focaltech-and-synaptics-smart-touchpad-driver-mac-os-x/)
@@ -70,7 +70,6 @@ prepare the Yosemite installer, with the following notes:
 - Additional kexts you'll need:
 
     - [`FakeSMC.kext`](https://github.com/RehabMan/OS-X-FakeSMC-kozlek)
-    - [`GenericUSBXHCI.kext`](https://github.com/RehabMan/OS-X-Generic-USB3)
     - [`RealtekRTL8111.kext`](https://github.com/RehabMan/OS-X-Realtek-Network)
 
 - [You can find all kexts to install into Clover here](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/master/Kexts/Clover)
@@ -168,7 +167,7 @@ Enable HD4600 QE/CI
 -------------------
 
 Install [`FakePCIID.kext` and `FakePCIID_HD4600_HD4400.kext`](https://github.com/RehabMan/OS-X-Fake-PCI-ID) into Clover's kext folder.
-[Also use this `config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/NO_DSDT/config.plist) inside Clover, which, compared to the original
+[Also use this `config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/2-No_DSDT/config.plist) inside Clover, which, compared to the original
 `config.plist` contains the proper platform-id, fake intel ids and patches to fix the garbled screen.
 
 If you can't see the EFI partition anymore you can mount it using a terminal the following way:
@@ -210,7 +209,7 @@ Restart the computer, go to setup, and enable both XHCI and 3D graphics:
 
 If you are using BIOS version `FB04`, build `01/15/2015 10:28:02`, ME FW version `9.1.2.10.10`, then you **MIGHT** be able to use
 [my pre patched, precompiled DSDT files](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/master/DSDT_patched), just put the compiled files onto `EFI/Clover/ACPI/patched`.
-Also use this [final `config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/Final/config.plist) in clover, which has `DropSSDT` enabled
+Also use this [dsdt patch `config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/3-DSDT/config.plist) in clover, which has `DropSSDT` enabled
 compared to the previous ones.
 
 If you have a different BIOS version, or the above files do not work for you, then you have to patch them manually. If you use the `config.plist` provided it should already
@@ -279,7 +278,34 @@ You have to apply the following patches on the files.
 MaciASL's repositories using the link mentioned above)
 
 Once the patches have been applied, use `Save as` on all files, and Save them into `ACPI Machine Language Binary`, and copy them over to Clover's `EFI/Clover/ACPI/patched` directory.
-Don't forget to enable DropSSDT inside [`config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/Final/config.plist), and restart the machine.
+Don't forget to enable DropSSDT inside [`config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/3-DSDT/config.plist), and restart the machine.
+
+CPU SSDT
+--------
+
+Next step is making sure the CPU's SSDT is patched for a better power management. Download [`ssdtPRgen`](https://github.com/Piker-Alpha/ssdtPRGen.sh),
+and generate an SSDT for the i7-4720HQ based on the 4710HQ, with fixed frequency and turbo boost values:
+
+    cd ~/Desktop
+    mkdir ssdt
+    curl -o ./ssdtPRGen.sh https://raw.githubusercontent.com/Piker-Alpha/ssdtPRGen.sh/master/ssdtPRGen.sh
+    chmod +x ./ssdtPRGen.sh
+    ./ssdtPRGen.sh  -p 'i7-4710HQ' -f 2600 -turbo 3600
+
+Say no when asked to copy the SSDT. It will be put into `~/Library/ssdtPRgen/SSDT.aml`. Alternatively you can try to use the generated SSDT inside the
+`DSDT_patched/CPU` folder.
+
+For this to work, you should also modify `config.plist` to use this SSDT, and not generate P and C states on it's own.
+This [`config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/4-CPU/config.plist) should do the job.
+
+Disabling hibernation
+---------------------
+
+As hibernation does not work, it's best to disable it. The following commands should do the job:
+
+    sudo pmset -a hibernatemode 0
+    sudo rm /var/vm/sleepimage
+    sudo mkdir /var/vm/sleepimage
 
 Final words
 -----------
@@ -289,6 +315,5 @@ While the functionality is okay, some things are still not working, and I'm look
 - ELAN touchpad driver has some quirks with two finger scrolling that is annoying. Also the driver is not open source, so fixing it won't be easy
 - Brightness keys still generate characters while using them. Similarly to the touchpad driver, this is closed source, so no easy fix yet.
 - SD Card reader doesn't work at all, and probably won't unless someone creates a driver from scratch.
-- Waking up from hibernation doesn't really work
 
 I'll try working on these issues when I have the time. I'll hope you've found the guide useful.

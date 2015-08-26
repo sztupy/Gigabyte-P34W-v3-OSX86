@@ -148,6 +148,8 @@ Enable AppleHDA
 
 [Download and install `AppleHDA-272.18.1-ALC282_v2.zip`](http://www.insanelymac.com/forum/topic/298663-applehda-for-yosemite/). Don't forget to fix permissions after this. The previous config.plist already includes the layout changes that need to be applied.
 
+Also [Download and install `CodecCommander`](https://github.com/RehabMan/EAPD-Codec-Commander), which will be used to make sure sound still works after the device has went to sleep. You might need to modify it's `Info.plist` to force reloading of the codec on ALC282 devices.
+
 Touch pad fixes
 ---------------
 

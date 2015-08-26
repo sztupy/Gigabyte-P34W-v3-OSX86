@@ -1,0 +1,9 @@
+into method label _Q28 code_regex BRTN.* replace_matched
+begin
+    Notify (PS2K, 0x20)\n
+end;
+
+into method label _Q30 code_regex BRTN.* replace_matched
+begin
+    Notify (PS2K, 0x10)\n
+end;

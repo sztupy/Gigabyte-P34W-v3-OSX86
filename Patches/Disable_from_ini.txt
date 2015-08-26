@@ -1,0 +1,7 @@
+into method label _INI parent_label \_SB.PCI0.PEG0.PEGP insert
+begin
+External(\_SB.PCI0.PEG0.PEGP._OFF, MethodObj)\n
+_OFF()\n
+end;
+
+into method label SGOF parent_label \_SB.PCI0.PEG0.PEGP code_regex .*EC.* removeall_matched;

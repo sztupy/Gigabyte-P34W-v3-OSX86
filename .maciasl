@@ -1,0 +1,5 @@
+[1] Fix operating system check [DSDT, SSDT9]	Patches/OS_Check_Fix_Win81.txt
+[2] Disable Graphics in _INI [SSDT9]	Patches/Disable_from_ini.txt
+[3] Disable Graphics in EC [DSDT]	Patches/Disable_in_ec.txt
+[4] Fix ACPI management [DSDT]	Patches/Battery_fix.txt
+[5] Enable brightness keys [DSDT]	Patches/Enable_brightness.txt

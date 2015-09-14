@@ -20,9 +20,9 @@ Quick compatibility chart and overview
     Ethernet        RTL8111                               ✓     Needs Realtek RTL8111.kext
     Wireless        Intel 7260                            X
                     AR9287 (from old machine)             ✓
-                    (BCM94352HMB)                         ?     Ordered, will update when it's arrived
+                    BCM94352HMB (bought separately)       ✓     Needs FakePCIID patch
     Bluetooth       Intel 7260                            X
-                    (BCM94352HMB)                         ?     Ordered, will update when it's arrived
+                    BCM94352HMB (bought separately)       ✓     Needs BcrmPatchRam.kext
     ACPI            Battery                               ✓     Needs ACPIBatteryManager and DSDT fixes
                     Sleep                                 ✓     Needs DSDT fixes
                     Deep sleep                            X
@@ -254,6 +254,13 @@ As hibernation does not work, it's best to disable it. The following commands sh
     sudo pmset -a hibernatemode 0
     sudo rm /var/vm/sleepimage
     sudo mkdir /var/vm/sleepimage
+
+BCM94352HMB
+-----------
+
+If you have installed a BCM94352HMB chip separately, then install the [`FakePCIID_BCM94352Z_as_BCM94360CS2.kext`](https://github.com/RehabMan/OS-X-Fake-PCI-ID) if you need Wifi, and the [`BcrmPatchRam.kext`](https://github.com/RehabMan/OS-X-BrcmPatchRAM)
+if you need BT functionality into the EFI kexts store, and restart your computer. This should give you basic Wifi (2.4Ghz) and BT4 functionality.
+
 
 Final words
 -----------

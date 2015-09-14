@@ -261,6 +261,26 @@ BCM94352HMB
 If you have installed a BCM94352HMB chip separately, then install the [`FakePCIID_BCM94352Z_as_BCM94360CS2.kext`](https://github.com/RehabMan/OS-X-Fake-PCI-ID) if you need Wifi, and the [`BcrmPatchRam.kext`](https://github.com/RehabMan/OS-X-BrcmPatchRAM)
 if you need BT functionality into the EFI kexts store, and restart your computer. This should give you basic Wifi (2.4Ghz) and BT4 functionality.
 
+To enable 5Ghz and BT Handoff support you can use the this [`config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/5-BCM-Wifi/config.plist). Note that this will set the country code of your wifi to `GB`. If you would like
+to change this then you have to open this patch in XCode, go to `KernelAndKextPatches/KextsToPatch`, find the one which says `10.10-BCM94352-5GHz-GB` (should be Item 3), and modify a few numbers in the `Replace` section.
+
+You have to modify the two numbers `47 42` in the middle of the replace section to one of the following (based on your country code):
+
+    AE - 41 45 | AF - 41 46 | AR - 41 52 | AT - 41 54 | AU - 41 55 | AZ - 41 5A | BD - 42 44 | BE - 42 45 | BG - 42 47 | BN - 42 4E
+    BR - 42 52 | BT - 42 54 | BY - 42 59 | CA - 43 41 | CH - 43 48 | CL - 43 4C | CN - 43 4E | CO - 43 4F | CR - 43 52 | CY - 43 59
+    CZ - 43 5A | DE - 44 45 | DK - 44 4B | DO - 44 4F | EC - 45 43 | EE - 45 45 | EG - 45 47 | ES - 45 53 | FI - 46 49 | FR - 46 52
+    GB - 47 42 | GR - 47 52 | GT - 47 54 | GU - 47 55 | HK - 48 4B | HN - 48 4E | HR - 48 52 | HU - 48 55 | ID - 49 44 | IE - 49 45
+    IL - 49 4C | IN - 49 4E | IS - 49 53 | IT - 49 54 | JM - 4A 4D | JO - 4A 4F | JP - 4A 50 | KH - 4B 48 | KZ - 4B 5A | LA - 4C 41
+    LI - 4C 49 | LK - 4C 4B | LT - 4C 54 | LU - 4C 55 | LV - 4C 56 | MA - 4D 41 | MM - 4D 4D | MN - 4D 4E | MO - 4D 4F | MT - 4D 54
+    MV - 4D 56 | MX - 4D 58 | MY - 4D 59 | NI - 4E 49 | NL - 4E 4C | NO - 4E 4F | NP - 4E 50 | NZ - 4E 5A | PA - 50 41 | PE - 50 45
+    PH - 50 48 | PK - 50 4B | PL - 50 4C | PR - 50 52 | PT - 50 54 | PY - 50 59 | RO - 52 4F | RS - 52 53 | RU - 52 55 | SA - 53 41
+    SE - 53 45 | SG - 53 47 | SI - 53 49 | SK - 53 4B | SV - 53 56 | TH - 54 48 | TR - 54 52 | TT - 54 54 | TW - 54 57 | UA - 55 41
+    US - 55 53 | UY - 55 59 | VE - 56 45 | VI - 56 49 | VN - 56 4E | ZA - 5A 41
+
+So for example if you live in the USA (`US`) change `47 42` to `55 53`. If you live in France (`FR`), change it to `46 52`, etc. If you don't know the code for your country you can check [`ISO_3166-1` on Wikipedia](http://www.wikiwand.com/en/ISO_3166-1_alpha-2).
+Note that not all country codes on the above list might be completely supported, if you experience issues it might be better to fall back to a supported version, like `US`.
+
+You might also want to change the patch's `Name` from `-GB` into the country of your chosing, but that's optional.
 
 Final words
 -----------

@@ -173,7 +173,9 @@ Restart the computer, go to setup, and enable both XHCI and 3D graphics:
 - `Advanced` -> `3D Graphic Acceleration` -> `Enabled`
 - `Advanced` -> `USB Configuration` -> `XHCI Mode` -> `Enabled`
 
-If you are using BIOS version `FB04`, build `01/15/2015 10:28:02`, ME FW version `9.1.2.10.10`, then you **MIGHT** be able to use [my pre patched, precompiled DSDT files](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/master/DSDT_patched), just put the compiled files onto `EFI/Clover/ACPI/patched`. Also use this [dsdt patch `config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/3-DSDT/config.plist) in clover, which has `DropSSDT` enabled compared to the previous ones.
+If you are using BIOS version `FB04`, build `01/15/2015 10:28:02`, ME FW version `9.1.2.10.10`, then you **MIGHT** be able to use [my pre patched, precompiled DSDT files](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/master/DSDT_patched_FB04), just put the compiled files onto `EFI/Clover/ACPI/patched`. Also use this [dsdt patch `config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/3-DSDT/config.plist) in clover, which has `DropSSDT` enabled compared to the previous ones.
+
+Also if you use `FB05`, you can find the [updated DSDT files](http://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/master/DSDT_patched_FB05) in the repository as well.
 
 If you have a different BIOS version, or the above files do not work for you, then you have to patch them manually. If you use the `config.plist` provided it should already have `nv_disable=1`, so your computer should boot up, but consume more power, as we have enabled the dedicated graphics card. We'll fix that soon. While you're still in Clover, press <kbd>F4</kbd>, so it will save your DSDT and SSDT files onto `EFI/Clover/ACPI/origin`. Mount the EFI partition again, and save the following files to your desktop:
 
@@ -220,7 +222,7 @@ You have to apply the following patches on the files.
      Fix PNOT/PPNT                      DSDT
      Add IMEI                           DSDT
      7-series/8-series USB              DSDT
-     Rename GFX0 to IGPU                DSDT, SSDT8,9,10
+     Rename GFX0 to IGPU                DSDT, SSDT8,9,10      (this doesn't work on FB05 BIOS completely, you have to rename some remaining GFX0 results to IGPU manually)
      Disable graphics in EC             DSDT                  (from my repository)
      Fix ACPI management                DSDT                  (from my repository)
      Enable brightness keys             DSDT                  (from my repository)

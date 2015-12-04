@@ -1,18 +1,20 @@
-Dual boot Windows 8.1&10 / OSX Yosemite 10.10.5 guide for Gigabyte P34W v3
-==========================================================================
+Dual boot Windows 8.1&10 / OSX El Captain 10.11.1 guide for Gigabyte P34W v3
+============================================================================
 
-See also http://www.tonymacx86.com/yosemite-laptop-guides/171082-guide-gigabyte-p34w-v3-windows-8-1-10-osx-10-10-5-guide.html
+If you would like to install El Capitan instead please check out [https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/yosemite](this guide).
 
 Quick compatibility chart and overview
 --------------------------------------
 
     Name            Type                                  Comp  Comments
     Device          Gigabyte P34W v3                      ✓
-    BIOS            UEFI Aptio FB04 / F002                ✓     Needs OsxAptioFixDrv
+    BIOS            UEFI Aptio FB05 / F002                ✓     Needs OsxAptioFixDrv
     CPU             Intel i7-4720HQ                       ✓
     Memory          8GB (+ 4GB from old machine)          ✓
     Video           Intel HD 4600                         ✓     Needs Clover patch and FakePCIID.
                     GTX 970M                              X     Needs DSDT patch to disable
+    USB             2.0                                   ✓
+                    3.0                                   X     Only the USB Charge port (left top) works for USB 3.0 devices
     Display         built-in                              ✓
                     HDMI                                  ✓
     Audio           ALC282                                ✓     Works with AppleHDA-272.18.1-ALC282_v2
@@ -39,7 +41,7 @@ Quick compatibility chart and overview
 TL;DR
 -----
 
-The Gigabyte P34W v3 is a strong but lightweight 14" gaming notebook, which is almost ideal for Yosemite. Most functionality work out of the box, and the only two concerns that are hard to rectify is the ELAN touchpad (which needs the non open source SmartTouchPad kext), and the SD card reader, which is unfortunately not USB based. Also the wifi card needs replacement, and deep sleep doesn't seem to be working for now.
+The Gigabyte P34W v3 is a strong but lightweight 14" gaming notebook, which is almost ideal for El Capitan. Most functionality work out of the box, and the only two concerns that are hard to rectify is the ELAN touchpad (which needs the non open source SmartTouchPad kext), and the SD card reader, which is unfortunately not USB based. Also the wifi card needs replacement, and deep sleep doesn't seem to be working for now.
 
 Most of the described functionality should still work with the Schenker XMG C405 with GTX965 as well, as they are the same barebone. The P34W v2 should also be okay. The P34W v4, and the XMG C405 with GTX970 however already have Broadwell CPUs, so some of the described functionality here might not apply to them.
 
@@ -48,13 +50,13 @@ Pre-install
 
 I have bought the P34W V3-CF2 version, which is similar to the CF1, but doesn't have an SSD (as I wanted to buy it separately). I have installed the SSD (Samsung Evo 850 250GB), and the AR9287 wifi chipset. You have to dismantle the notebook for these, [here is a disassembly video](https://www.youtube.com/watch?v=Lbn3PMfogzk) you can use for reference.
 
-Also have two USB devices ready, [one with the Windows installer,](http://windows.microsoft.com/en-GB/windows-8/create-reset-refresh-media) the other one with Yosemite. [You can use this guide](http://www.tonymacx86.com/yosemite-laptop-support/148093-guide-booting-os-x-installer-laptops-clover.html) to prepare the Yosemite installer, with the following notes:
+Also have two USB devices ready, [one with the Windows installer,](http://windows.microsoft.com/en-GB/windows-8/create-reset-refresh-media) the other one with El Capitan. [You can use this guide](http://www.tonymacx86.com/yosemite-laptop-support/148093-guide-booting-os-x-installer-laptops-clover.html) to prepare the El Capitan installer, with the following notes:
 
-- I am using clover v3259
+- I am using clover v3330
 - I have used the unibeast method to create the installation media, and installed clover on top of it.
 - You can use [this `config.plist` for install](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/1-Install/config.plist),   which is basically the default clover config with the KernelPM and AICPM patches enabled.
-- The `VoodooPS2Controller` will not work properly with the touchpad, and sometimes it won't even load up the keyboard in case the touchpad initialisation fails, so until there is a better kext, use [SmartTouchPad v4.4](http://forum.osxlatitude.com/index.php?/topic/1948-elan-focaltech-and-synaptics-smart-touchpad-driver-mac-os-x/) Alternatively you can just connect an USB keyboard and mouse during installation.
-- Don't forget to add the `OsxAptioFixDrv` driver, and to replace the `VBoxHFS` with the `HFSPlus` driver
+- The `VoodooPS2Controller` will not work properly with the touchpad, and sometimes it won't even load up the keyboard in case the touchpad initialisation fails, so until there is a better kext, use [SmartTouchPad v4.5](http://forum.osxlatitude.com/index.php?/topic/1948-elan-focaltech-and-synaptics-smart-touchpad-driver-mac-os-x/) Alternatively you can just connect an USB keyboard and mouse during installation.
+- Don't forget to add the `OsxAptioFixDrv` driver, and to replace the `VBoxHFS` with the `HFSPlus` driver. For installation you might need to use `OsxAptioFixDrv2`, for running the system the first version is also okay.
 - Additional kexts you'll need:
 
     - [`FakeSMC.kext`](https://github.com/RehabMan/OS-X-FakeSMC-kozlek)
@@ -103,10 +105,10 @@ After this you should be able to install Windows 8.1 onto the newly created 119G
 
 Once Windows 8.1 is installed, and you are sure that you can reinstall it anytime without issues you might want to delete everything on the HDD, and repartition it. Note that this will delete the recovery partition on your HDD. If you can reinstall Windows 8.1 from an USB then you'll probably won't need it though.
 
-Yosemite Install
-----------------
+El Capitan Install
+------------------
 
-Once Windows 8.1 is installed, and you're happy with it (note that USB3 and Nvidia is still disabled in the BIOS, we'll enable it after the OSX install), you can move onto the Yosemite install. Insert your OSX installation media, Press <kbd>F12</kbd> during start, and select it. Please make sure again that you are selecting the UEFI option, otherwise the installation will not work.
+Once Windows 8.1 is installed, and you're happy with it (note that USB3 and Nvidia is still disabled in the BIOS, we'll enable it after the OSX install), you can move onto the El Capitan install. Insert your OSX installation media, Press <kbd>F12</kbd> during start, and select it. Please make sure again that you are selecting the UEFI option, otherwise the installation will not work.
 
 During installation use Disk Utility to add a HFS+ Journaled, case insensitive partition on the free space we have left on the SSD during Windows 8.1 install, and install OSX there. [You can use this guide](http://www.tonymacx86.com/yosemite-laptop-support/148093-guide-booting-os-x-installer-laptops-clover.html) if you need help for these steps. If the installer does not start up, or reboots when the apple logo comes up, then make sure that:
 
@@ -118,7 +120,7 @@ Once installation finishes, boot Clover from the USB drive (again, make sure to 
 Set clover as boot manager
 --------------------------
 
-Once booted into the new installation you can download and install Clover onto your main SSD as well. Don't forget to do the same steps as you did with the Yosemite install media (enable KernelPM patches inside config.plist and installing the necessary kexts)
+Once booted into the new installation you can download and install Clover onto your main SSD as well. Don't forget to do the same steps as you did with the El Capitan install media (enable KernelPM patches inside config.plist and installing the necessary kexts)
 
 Unfortunately the BIOS will not pick up the clover installation, so you'll need to use the "bootmgr" trick: go to your EFI partition, `Microsoft` -> `Boot`, rename `bootmgfw.efi` to `bootmgfw-orig.efi`. Then copy `Clover` -> `CloverX64.efi` into `Microsoft` -> `Boot`. Finally rename `CloverX64.efi` inside `Microsoft` -> `Boot` to `bootmgfw.efi`
 
@@ -148,6 +150,10 @@ Enable AppleHDA
 
 [Download and install `AppleHDA-272.18.1-ALC282_v2.zip`](http://www.insanelymac.com/forum/topic/298663-applehda-for-yosemite/). Don't forget to fix permissions after this. The previous config.plist already includes the layout changes that need to be applied.
 
+Note: in El Capitan to repair permissions you can use the following command from the command line:
+
+    sudo /usr/libexec/repair_packages --repair --standard-pkgs /
+
 Also [Download and install `CodecCommander`](https://github.com/RehabMan/EAPD-Codec-Commander), which will be used to make sure sound still works after the device has went to sleep. You might need to modify it's `Info.plist` to force reloading of the codec on ALC282 devices.
 
 Touch pad fixes
@@ -157,6 +163,8 @@ If you're not using the `ApplePS2SmartTouchPad` from my repository, you should p
 
 - Two finger multi touch scroll. Note that because of the driver's quirks this only works properly if your left finger's position is above your right finger's  position on the trackpad :(
 - Three finger swipes: switch desktops left/right, application windows and mission control
+
+Note that for two finger scroll to work, you have to first go to the Trackpad settings in System Prferences, and change the speed of scroll at least once. Once this is done two finger scroll should be enabled and working.
 
 DSDT patches
 ------------
@@ -175,7 +183,7 @@ Restart the computer, go to setup, and enable both XHCI and 3D graphics:
 
 If you are using BIOS version `FB04`, build `01/15/2015 10:28:02`, ME FW version `9.1.2.10.10`, then you **MIGHT** be able to use [my pre patched, precompiled DSDT files](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/master/DSDT_patched_FB04), just put the compiled files onto `EFI/Clover/ACPI/patched`. Also use this [dsdt patch `config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/3-DSDT/config.plist) in clover, which has `DropSSDT` enabled compared to the previous ones.
 
-Also if you use `FB05`, you can find the [updated DSDT files](http://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/master/DSDT_patched_FB05) in the repository as well.
+Also if you use `FB05` or have upgraded to it, you can find the [updated DSDT files](http://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/master/DSDT_patched_FB05) in the repository as well.
 
 If you have a different BIOS version, or the above files do not work for you, then you have to patch them manually. If you use the `config.plist` provided it should already have `nv_disable=1`, so your computer should boot up, but consume more power, as we have enabled the dedicated graphics card. We'll fix that soon. While you're still in Clover, press <kbd>F4</kbd>, so it will save your DSDT and SSDT files onto `EFI/Clover/ACPI/origin`. Mount the EFI partition again, and save the following files to your desktop:
 
@@ -289,6 +297,7 @@ Final words
 
 While the functionality is okay, some things are still not working, and I'm looking into them:
 
+- Only one USB 3 port works for now (the powered one, which is the left topmost one). This can probably be fixed with some portmapping config and DSDT patches.
 - ELAN touchpad driver has some quirks with two finger scrolling that is annoying. Also the driver is not open source, so fixing it won't be easy
 - Brightness keys still generate characters while using them. Similarly to the touchpad driver, this is closed source, so no easy fix yet.
 - SD Card reader doesn't work at all, and probably won't unless someone creates a driver from scratch.

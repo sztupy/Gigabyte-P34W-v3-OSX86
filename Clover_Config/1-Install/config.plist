@@ -157,7 +157,7 @@
 		<key>ScreenResolution</key>
 		<string>1280x1024</string>
 		<key>Theme</key>
-		<string>metal</string>
+		<string>bootcamp</string>
 	</dict>
 	<key>Graphics</key>
 	<dict/>

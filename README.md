@@ -24,7 +24,7 @@ Quick compatibility chart and overview
                     AR9287 (from old machine)             ✓
                     BCM94352HMB (bought separately)       ✓     Needs FakePCIID patch
     Bluetooth       Intel 7260                            X
-                    BCM94352HMB (bought separately)       ✓     Needs BcrmPatchRam.kext
+                    BCM94352HMB (bought separately)       ✓     Needs BcrmPatchRam2.kext
     ACPI            Battery                               ✓     Needs ACPIBatteryManager and DSDT fixes
                     Sleep                                 ✓     Needs DSDT fixes
                     Deep sleep                            X
@@ -268,7 +268,7 @@ As hibernation does not work, it's best to disable it. The following commands sh
 BCM94352HMB
 -----------
 
-If you have installed a BCM94352HMB chip separately, then install the [`FakePCIID_BCM94352Z_as_BCM94360CS2.kext`](https://github.com/RehabMan/OS-X-Fake-PCI-ID) if you need Wifi, and the [`BcrmPatchRam.kext`](https://github.com/RehabMan/OS-X-BrcmPatchRAM)
+If you have installed a BCM94352HMB chip separately, then install the [`FakePCIID_BCM94352Z_as_BCM94360CS2.kext`](https://github.com/RehabMan/OS-X-Fake-PCI-ID) if you need Wifi, and the [`BcrmPatchRam2.kext`](https://github.com/RehabMan/OS-X-BrcmPatchRAM)
 if you need BT functionality into the EFI kexts store, and restart your computer. This should give you basic Wifi (2.4Ghz) and BT4 functionality.
 
 To enable 5Ghz and BT Handoff support you can use the this [`config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/5-BCM-Wifi/config.plist). Note that this will set the country code of your wifi to `GB`. If you would like

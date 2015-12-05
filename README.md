@@ -1,7 +1,7 @@
 Dual boot Windows 8.1&10 / OSX El Captain 10.11.1 guide for Gigabyte P34W v3
 ============================================================================
 
-If you would like to install El Capitan instead please check out [https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/yosemite](this guide).
+If you would like to install Yosemite instead please check out [this guide](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/yosemite)
 
 Quick compatibility chart and overview
 --------------------------------------

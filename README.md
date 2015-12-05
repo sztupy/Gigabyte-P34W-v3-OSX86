@@ -8,7 +8,7 @@ Quick compatibility chart and overview
 
     Name            Type                                  Comp  Comments
     Device          Gigabyte P34W v3                      ✓
-    BIOS            UEFI Aptio FB05 / F002                ✓     Needs OsxAptioFixDrv
+    BIOS            UEFI Aptio FB05 / F006                ✓     Needs OsxAptioFixDrv
     CPU             Intel i7-4720HQ                       ✓
     Memory          8GB (+ 4GB from old machine)          ✓
     Video           Intel HD 4600                         ✓     Needs Clover patch and FakePCIID.
@@ -181,7 +181,7 @@ Restart the computer, go to setup, and enable both XHCI and 3D graphics:
 - `Advanced` -> `3D Graphic Acceleration` -> `Enabled`
 - `Advanced` -> `USB Configuration` -> `XHCI Mode` -> `Enabled`
 
-If you are using BIOS version `FB05`, then you **MIGHT** be able to use [my pre patched, precompiled DSDT files](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/master/DSDT_patched_FB05), just put the compiled files onto `EFI/Clover/ACPI/patched`. Also use this [dsdt patch `config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/3-DSDT/config.plist) in clover, which has `DropSSDT` enabled compared to the previous ones.
+If you are using BIOS version `FB05`, with EC version `F006 / 9.1.2.1010` build time `10/08/2015 12:09:57` then you **MIGHT** be able to use [my pre patched, precompiled DSDT files](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/tree/master/DSDT_patched_FB05), just put the compiled files onto `EFI/Clover/ACPI/patched`. Also use this [dsdt patch `config.plist`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Clover_Config/3-DSDT/config.plist) in clover, which has `DropSSDT` enabled compared to the previous ones.
 
 If you have a different BIOS version, or the above files do not work for you, then you have to patch them manually. If you use the `config.plist` provided it should already have `nv_disable=1`, so your computer should boot up, but consume more power, as we have enabled the dedicated graphics card. We'll fix that soon. While you're still in Clover, press <kbd>F4</kbd>, so it will save your DSDT and SSDT files onto `EFI/Clover/ACPI/origin`. Mount the EFI partition again, and save the following files to your desktop:
 

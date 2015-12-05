@@ -193,7 +193,7 @@ If you have a different BIOS version, or the above files do not work for you, th
 - `SSDT-9.aml`
 - `SSDT-10.aml`
 
-You should copy over SSDT-2 and SSDT-3 as well during decompilation, but then you'll won't need them again, as they are s CPU only. SSDT-4x,5x and 6x are loaded dynamically, and can be discarded.
+You should copy over SSDT-2 and SSDT-3 as well during decompilation, but then you'll won't need them again, as they are for the CPU only. SSDT-4x,5x and 6x are loaded dynamically, and can be discarded.
 
 Note: if you don't have SSDT-9 and SSDT-10, then you probably forgot to enable NVidia in the setup. Please enable it, restart the computer and try again. Patching DSDT/SSDT files will only work with the full set of files, which you only get when Dedicated graphics is enabled.
 
@@ -309,7 +309,6 @@ Final words
 
 While the functionality is okay, some things are still not working, and I'm looking into them:
 
-- Only one USB 3 port works for now (the powered one, which is the left topmost one). This can probably be fixed with some portmapping config and DSDT patches.
 - ELAN touchpad driver has some quirks with two finger scrolling that is annoying. Also the driver is not open source, so fixing it won't be easy
 - Brightness keys still generate characters while using them. Similarly to the touchpad driver, this is closed source, so no easy fix yet.
 - SD Card reader doesn't work at all, and probably won't unless someone creates a driver from scratch.

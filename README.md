@@ -14,7 +14,7 @@ Quick compatibility chart and overview
     Video           Intel HD 4600                         ✓     Needs Clover patch and FakePCIID.
                     GTX 970M                              X     Needs DSDT patch to disable
     USB             2.0                                   ✓
-                    3.0                                   X     Only the USB Charge port (left top) works for USB 3.0 devices
+                    3.0                                   ✓     Without injector kext only the USB Charge port (left top) works for USB 3.0 devices
     Display         built-in                              ✓
                     HDMI                                  ✓
     Audio           ALC282                                ✓     Works with AppleHDA-272.18.1-ALC282_v2
@@ -291,6 +291,18 @@ So for example if you live in the USA (`US`) change `47 42` to `55 53`. If you l
 Note that not all country codes on the above list might be completely supported, if you experience issues it might be better to fall back to a supported version, like `US`.
 
 You might also want to change the patch's `Name` from `-GB` into the country of your chosing, but that's optional.
+
+USB 3.0
+-------
+
+By default all USB 2 ports work, but for USB 3 devices you can only use the top left one, the rest are not working. This is because the device has already set up 14 USB 2 ports internally, so only one is left for USB 3 connectivity. To fix this an injector kext is required that only enables the prots that are actually used in the devices, which are:
+
+* HS01, HS02, HS09, HS10: The four external USB 2.0 ports (top left, bottom left, top right, bottom right)
+* HS03: The internal port used by BCM94352HMB for Bluetooth functionality
+* HS04: The internal port used by the webcam
+* SSP1, SSP2, SSP5, SSP6: The four external USB 3.0 ports (top left, bottom left, top right, bottom right)
+
+To enable SSP2-SSP6, you can simply put the [`USBXHCI-P34Wv3.kext`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Kexts/Clover/USBXHCI-P34Wv3.kext.zip) into Clover's kext directory, and restart the computer.
 
 Final words
 -----------

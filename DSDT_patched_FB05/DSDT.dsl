@@ -5164,7 +5164,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "GBT   ", "GBTUACPI", 0x00000040)
             Name (_ADR, 0x00190000)  // _ADR: Address
             Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
             {
-                Return (GPRW (0x0D, 0x04))
+                Return (GPRW (0x09, 0x04))
             }
         }
 
@@ -5508,7 +5508,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "GBT   ", "GBTUACPI", 0x00000040)
 
             Name (_PRW, Package (0x02)  // _PRW: Power Resources for Wake
             {
-                0x0D, 
+                0x09, 
                 Zero
             })
             Method (_DSM, 4, NotSerialized)
@@ -5787,7 +5787,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "GBT   ", "GBTUACPI", 0x00000040)
 
             Name (_PRW, Package (0x02)  // _PRW: Power Resources for Wake
             {
-                0x0D, 
+                0x09, 
                 Zero
             })
             Method (_DSM, 4, NotSerialized)
@@ -7417,7 +7417,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "GBT   ", "GBTUACPI", 0x00000040)
 
             Name (_PRW, Package (0x02)  // _PRW: Power Resources for Wake
             {
-                0x0D, 
+                0x09, 
                 Zero
             })
             Method (_DSM, 4, NotSerialized)
@@ -7458,7 +7458,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "GBT   ", "GBTUACPI", 0x00000040)
 
             Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
             {
-                Return (GPRW (0x0D, 0x04))
+                Return (GPRW (0x09, 0x04))
             }
         }
 

@@ -304,6 +304,29 @@ By default all USB 2 ports work, but for USB 3 devices you can only use the top 
 
 To enable SSP2-SSP6, you can simply put the [`USBXHCI-P34Wv3.kext`](https://github.com/sztupy/Gigabyte-P34W-v3-OSX86/blob/master/Kexts/Clover/USBXHCI-P34Wv3.kext.zip) into Clover's kext directory, and restart the computer.
 
+HiDPI
+-----
+
+HiDPI mode will aloow you to use your built in display in "retina" mode, essentially keeping the full resolution, but making text bigger, and more legible.
+
+To enable first enable the settings in OSX:
+
+    sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool YES
+    sudo defaults delete /Library/Preferences/com.apple.windowserver DisplayResolutionDisabled
+
+Next create a directory for your laptop's monitor:
+
+    sudo mkdir -p /System/Library/Displays/Contents/Resources/Overrides/DisplayVendorID-6af
+
+Next copy the `Files/DisplayProductId-113d` file into this directory:
+
+    sudo cp Files/DisplayProductId-113d /System/Library/Displays/Contents/Resources/Overrides/DisplayVendorID-6af/
+
+Restart your computer afterwards.
+
+Note: these steps will only work with the FullHD screen of the P34Wv3. If you have the higher resolution ones these might not work you as that monitor
+has different resolution settings.
+
 Final words
 -----------
 

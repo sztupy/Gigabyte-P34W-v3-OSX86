@@ -126,6 +126,8 @@ Unfortunately the BIOS will not pick up the clover installation, so you'll need 
 
 Restart, go to setup, and make sure that the first boot option is `Windows Boot Manager` and the OS Type is set to `UEFI`. You can also remove all other boot options that are not related to this. Check if OSX and Windows can both be booted through Clover, and work fine.
 
+Note that Windows Update can mess up the dual boot settings, in which case you have to do the rename trick. For a more permanent solution you can check the end of the guide on how to add Clover as a separate entry into the boot menu.
+
 Enable TRIM on the SSD
 ----------------------
 
@@ -324,8 +326,38 @@ Next copy the `Files/DisplayProductId-113d` file into this directory:
 
 Restart your computer afterwards.
 
-Note: these steps will only work with the FullHD screen of the P34Wv3. If you have the higher resolution ones these might not work you as that monitor
-has different resolution settings.
+Note: these steps will only work with the FullHD screen of the P34Wv3. If you have the higher resolution ones these might not work you as that monitor has different resolution settings.
+
+Proper UEFI Boot setting
+------------------------
+
+To add Clover UEFI in a more permanent way to the boot menu, you have to install a boot menu entry. Currently the easiest way to do it is to boot the machine in Linux. A USB disk with an Ubuntu 16.10 installer works fine for this purpose.
+
+Boot up the USB flash disk with Linux on it in UEFI mode, and once it is booted up open up a terminal and issue the following command:
+
+    sudo efibootmgr -c -L 'Clover UEFI' -l '\EFI\CLOVER\CLOVERX64.EFI'
+
+Note the usage of single quotes instead of double ones. Once this is done, and you restart your machine "Clover UEFI" should appear in your boot menu list, and you can choose it instead of the default Windows Boot Manager.
+
+Note that the installation can leave a few unwanted entries, like "MAC OS X" which you might want to get rid of. You can do that from Linux using the following command:
+
+    sudo efibootmgr
+
+    # this will list the boot entries, for example:
+
+    Boot0000* Windows Boot Manager
+    Boot0001* Clover UEFI
+    Boot0080* Mac OS X
+    Boot0081* Mac OS X
+
+Note the number of the ones you want to delete, for example `80` and `81` and issue the following command:
+
+    sudo efibootmgr -b 80 -B
+    sudo efibootmgr -b 81 -B
+
+These will get rid of the unwanted entries.
+
+NOTE: Double check that you are deleting the proper fields. Deleting the wrong fields can block you out of booting into your machine!
 
 Final words
 -----------
